@@ -1,29 +1,29 @@
-const moves = document.getElementById("moves-count");
-const timeValue = document.getElementById("time");
-const startButton = document.getElementById("start");
-const stopButton = document.getElementById("stop");
-const gameContainer = document.querySelector(".game-container");
+const moves = document.getElementById("moves");
+const time = document.getElementById("time");
+const start__btn = document.getElementById("start");
+const stop__btn = document.getElementById("stop");
+const game__container = document.querySelector(".game__container");
 const result = document.getElementById("result");
-const controls = document.querySelector(".controls-container");
-let cards;
+const commands = document.querySelector(".commands__container");
+let boxes;
 let interval;
-let firstCard = false;
-let secondCard = false;
+let firstBox = false;
+let secondBox = false;
 
 //Items array
 const items = [
-  { name: "bee", image: "vice.png" },
-  { name: "crocodile", image: "vhong.png" },
-  { name: "macaw", image: "anne.png" },
-  { name: "bee", image: "jhong.png" },
-  { name: "bee", image: "ion.png" },
-  { name: "crocodile", image: "kim.png" },
-  { name: "macaw", image: "karylle.png" },
-  { name: "bee", image: "ogie.png" },
-  { name: "crocodile", image: "amy.png" },
-  { name: "macaw", image: "anne.png" },
-  { name: "bee", image: "jhong.png" },
-  { name: "bee", image: "vice.png" }
+  { name: "vice", image: "./assets/vice.png" },
+  { name: "vhong", image: "./assets/vhong.png" },
+  { name: "anne", image: "./assets/anne.png" },
+  { name: "jhong", image: "./assets/jhong.png" },
+  { name: "ion", image: "./assets/ion.png" },
+  { name: "kim", image: "./assets/kim.png" },
+  { name: "karylle", image: "./assets/karylle.png" },
+  { name: "ogie", image: "./assets/ogie.png" },
+  { name: "amy", image: "./assets/amy.png" },
+  { name: "anne", image: "./assets/anne.png" },
+  { name: "jhong", image: "./assets/jhong.png" },
+  { name: "vice", image: "./assets/vice.png" }
 ];
 
 //Initial Time
@@ -44,7 +44,7 @@ const timeGenerator = () => {
   //format time before displaying
   let secondsValue = seconds < 10 ? `0${seconds}` : seconds;
   let minutesValue = minutes < 10 ? `0${minutes}` : minutes;
-  timeValue.innerHTML = `<span>Time:</span>${minutesValue}:${secondsValue}`;
+  time.innerHTML = `<span>Time:</span>${minutesValue}:${secondsValue}`;
 };
 
 //For calculating moves
@@ -57,86 +57,86 @@ const movesCounter = () => {
 const generateRandom = (size = 4) => {
   //temporary array
   let tempArray = [...items];
-  //initializes cardValues array
-  let cardValues = [];
+  //initializes boxValues array
+  let boxValues = [];
   //size should be double (4*4 matrix)/2 since pairs of objects would exist
   size = (size * size) / 2;
   //Random object selection
   for (let i = 0; i < size; i++) {
     const randomIndex = Math.floor(Math.random() * tempArray.length);
-    cardValues.push(tempArray[randomIndex]);
+    boxValues.push(tempArray[randomIndex]);
     //once selected remove the object from temp array
     tempArray.splice(randomIndex, 1);
   }
-  return cardValues;
+  return boxValues;
 };
 
-const matrixGenerator = (cardValues, size = 4) => {
-  gameContainer.innerHTML = "";
-  cardValues = [...cardValues, ...cardValues];
+const matrixGenerator = (boxValues, size = 4) => {
+  game__container.innerHTML = "";
+  boxValues = [...boxValues, ...boxValues];
   //simple shuffle
-  cardValues.sort(() => Math.random() - 0.5);
+  boxValues.sort(() => Math.random() - 0.5);
   for (let i = 0; i < size * size; i++) {
     /*
-        Create Cards
+        Create boxes
         before => front side (contains question mark)
         after => back side (contains actual image);
-        data-card-values is a custom attribute which stores the names of the cards to match later
+        box__card--values is a custom attribute which stores the names of the boxes to match later
       */
-    gameContainer.innerHTML += `
-     <div class="card-container" data-card-value="${cardValues[i].name}">
-        <div class="card-before">
-            <img src="./st_logo.jpg" alt="">
+    game__container.innerHTML += `
+     <div class="box__container" box__card--value="${boxValues[i].name}">
+        <div class="box__before">
+            <img src="./assets/st_logo.jpg" alt="">
         </div>
-        <div class="card-after">
-        <img src="${cardValues[i].image}" class="image"/>
+        <div class="box__after">
+        <img src="${boxValues[i].image}" class="image"/>
         </div>
      </div>
      `;
   }
   //Grid
-  gameContainer.style.gridTemplateColumns = `repeat(${size},auto)`;
+  game__container.style.gridTemplateColumns = `repeat(${size},auto)`;
 
-  //Cards
-  cards = document.querySelectorAll(".card-container");
-  cards.forEach((card) => {
+  //boxes
+  boxes = document.querySelectorAll(".box__container");
+  boxes.forEach((card) => {
     card.addEventListener("click", () => {
       //If selected card is not matched yet then only run (i.e already matched card when clicked would be ignored)
       if (!card.classList.contains("matched")) {
         //flip the cliked card
         card.classList.add("flipped");
-        //if it is the firstcard (!firstCard since firstCard is initially false)
-        if (!firstCard) {
-          //so current card will become firstCard
-          firstCard = card;
-          //current cards value becomes firstCardValue
-          firstCardValue = card.getAttribute("data-card-value");
+        //if it is the firstBox (!firstBox since firstBox is initially false)
+        if (!firstBox) {
+          //so current card will become firstBox
+          firstBox = card;
+          //current boxes value becomes firstBoxValue
+          firstBoxValue = card.getAttribute("box__card--value");
         } else {
           //increment moves since user selected second card
           movesCounter();
-          //secondCard and value
-          secondCard = card;
-          let secondCardValue = card.getAttribute("data-card-value");
-          if (firstCardValue == secondCardValue) {
-            //if both cards match add matched class so these cards would beignored next time
-            firstCard.classList.add("matched");
-            secondCard.classList.add("matched");
-            //set firstCard to false since next card would be first now
-            firstCard = false;
+          //secondBox and value
+          secondBox = card;
+          let secondBoxValue = card.getAttribute("box__card--value");
+          if (firstBoxValue == secondBoxValue) {
+            //if both boxes match add matched class so these boxes would beignored next time
+            firstBox.classList.add("matched");
+            secondBox.classList.add("matched");
+            //set firstBox to false since next card would be first now
+            firstBox = false;
             //winCount increment as user found a correct match
             winCount += 1;
-            //check if winCount ==half of cardValues
-            if (winCount == Math.floor(cardValues.length / 2)) {
+            //check if winCount ==half of boxValues
+            if (winCount == Math.floor(boxValues.length / 2)) {
               result.innerHTML = `<h2>You Won</h2>
             <h4>Moves: ${movesCount}</h4>`;
               stopGame();
             }
           } else {
-            //if the cards dont match
-            //flip the cards back to normal
-            let [tempFirst, tempSecond] = [firstCard, secondCard];
-            firstCard = false;
-            secondCard = false;
+            //if the boxes dont match
+            //flip the boxes back to normal
+            let [tempFirst, tempSecond] = [firstBox, secondBox];
+            firstBox = false;
+            secondBox = false;
             let delay = setTimeout(() => {
               tempFirst.classList.remove("flipped");
               tempSecond.classList.remove("flipped");
@@ -149,14 +149,14 @@ const matrixGenerator = (cardValues, size = 4) => {
 };
 
 //Start game
-startButton.addEventListener("click", () => {
+start__btn.addEventListener("click", () => {
   movesCount = 0;
   seconds = 0;
   minutes = 0;
-  //controls amd buttons visibility
-  controls.classList.add("hide");
-  stopButton.classList.remove("hide");
-  startButton.classList.add("hide");
+  //commands amd buttons visibility
+  commands.classList.add("hide");
+  stop__btn.classList.remove("hide");
+  start__btn.classList.add("hide");
   //Start timer
   interval = setInterval(timeGenerator, 1000);
   //initial moves
@@ -165,12 +165,12 @@ startButton.addEventListener("click", () => {
 });
 
 //Stop game
-stopButton.addEventListener(
+stop__btn.addEventListener(
   "click",
   (stopGame = () => {
-    controls.classList.remove("hide");
-    stopButton.classList.add("hide");
-    startButton.classList.remove("hide");
+    commands.classList.remove("hide");
+    stop__btn.classList.add("hide");
+    start__btn.classList.remove("hide");
     clearInterval(interval);
   })
 );
@@ -179,7 +179,7 @@ stopButton.addEventListener(
 const initializer = () => {
   result.innerText = "";
   winCount = 0;
-  let cardValues = generateRandom();
-  console.log(cardValues);
-  matrixGenerator(cardValues);
+  let boxValues = generateRandom();
+  console.log(boxValues);
+  matrixGenerator(boxValues);
 };

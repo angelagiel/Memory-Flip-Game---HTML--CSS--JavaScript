@@ -12,19 +12,30 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body >
-    <div class="wrapper">
-      <div class="stats-container">
-        <div id="moves-count"></div>
+    <div class="instructions">
+      <figure>
+        <img src="./assets/complete.jpg" alt="" class="complete__img">
+      </figure>
+      <div class="text__para">
+        <p><span class='black'>It's MatchTime!</span><br> In this exciting game, you'll be matching pairs of boxes featuring famous hosts from It's Showtime. <br> Flip the boxes and test your skills to see how many pairs you can match.
+
+          Objective:
+          Match all pairs of cards before the time runs out!</p>
+      </div>
+    </div>
+    <div class="game__wrapper">
+      <div class="metrics__container">
+        <div id="moves"></div>
         <div id="time"></div>
       </div>
-      <div class="game-container">
+      <div class="game__container">
       </div>
       <button id="stop" class="hide">Stop Game</button>
     </div>
-    <div class="controls-container">
+    <div class="commands__container">
       <p id="result"></p>
       <button id="start">
-        <img src="./logo_showtime.png" alt="">
+        <img src="./assets/logo_showtime.png" alt="">
       </button>
     </div>
     <!-- Script -->

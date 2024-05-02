@@ -10,42 +10,76 @@ html {
   overflow-x: hidden;
 }
 body {
-    background-color: #f4c531;
-  }
+  background-color: #f4c531;
+  display: flex;
+  flex-direction: row;
+}
+.instructions {
+  width: 50%;
+  height: 100%;
+  transform: translate(95px, 110px);
+  border: 10px solid white;
+  border-radius: 50px;
+  overflow: hidden;
+  padding: 20px;
+}
 
-.wrapper {
+.instructions p{
+  font-weight: 700;
+  margin: 0 10px;
+  width: 80%;
+  color: #000000
+}
+
+
+
+.black{
+  color: #000000;
+}
+
+
+.complete__img {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  border-radius:50px;
+}
+
+
+.game__wrapper {
   box-sizing: content-box;
   width: 26.87em;
+  /* width: 50%; */
   padding: 2.5em 3em;
   background-color: #ffffff;
   position: absolute;
   transform: translate(-50%, -50%);
-  left: 50%;
-  top: 50%;
+  left: 75%;
+  top: 48%;
   border-radius: 0.6em;
   box-shadow: 0 0.9em 2.8em rgba(86, 66, 0, 0.2);
 }
-.game-container {
+.game__container {
   position: relative;
   width: 100%;
   display: grid;
   gap: 0.6em;
 }
-.stats-container {
+.metrics__container {
   text-align: right;
   margin-bottom: 1.2em;
 }
-.stats-container span {
+.metrics__container span {
   font-weight: 600;
 }
-.card-container {
+.box__container {
   position: relative;
   width: 6.25em;
   height: 6.25em;
   cursor: pointer;
 }
-.card-before,
-.card-after {
+.box__before,
+.box__after {
   position: absolute;
   border-radius: 5px;
   width: 100%;
@@ -57,18 +91,18 @@ body {
   transition: transform 0.7s ease-out;
   backface-visibility: hidden;
 }
-.card-before {
-  background-color: #f4c531;
+.box__before {
+  /* background-color: #f4c531; */
   background-color: #fff;
   /* font-size: 2.8em;
 font-weight: 600; */
 }
 
-.card-before img {
+.box__before img {
   width: 100%;
   height: 100%;
 }
-.card-after {
+.box__after {
   background-color: #ffffff;
   transform: rotateY(180deg);
 }
@@ -76,13 +110,13 @@ font-weight: 600; */
 .image {
   height: 100%;
 }
-.card-container.flipped .card-before {
+.box__container.flipped .box__before {
   transform: rotateY(180deg);
 }
-.card-container.flipped .card-after {
+.box__container.flipped .box__after {
   transform: rotateY(0deg);
 }
-.controls-container {
+.commands__container {
   position: absolute;
   display: flex;
   align-items: center;
@@ -91,9 +125,11 @@ font-weight: 600; */
   width: 100%;
   height: 100%;
   background-color: #f4c531;
-  /* background: linear-gradient(90deg, rgba(11,81,247,1) 0%, rgba(0,157,255,0.9316239316239316) 100%); */
   top: 0;
 }
+
+
+
 button {
   width: 300px;
   border: none;
@@ -113,11 +149,14 @@ button img {
   background-color: #000000;
   color: #ffffff;
 }
-.controls-container button {
+.commands__container button {
   font-size: 1.3em;
   box-shadow: 0 0.6em 2em rgba(86, 66, 0, 0.2);
-  background: linear-gradient(90deg, rgba(11,81,247,1) 0%, rgba(0,157,255,0.9316239316239316) 100%);
-  
+  background: linear-gradient(
+    90deg,
+    rgba(11, 81, 247, 1) 0%,
+    rgba(0, 157, 255, 0.9316239316239316) 100%
+  );
 }
 .hide {
   display: none;
